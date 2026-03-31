@@ -103,7 +103,11 @@ static void finish() {
 
 void TestRunner_Prologue() {
     if (frame == SDL_MAX_UINT64) {
-        raise(SIGSTOP);
+        #ifdef SIGSTOP
+            raise(SIGSTOP);
+        #elif defined(_WIN32)
+            __debugbreak();
+        #endif
     }
 
     p1sw_buff = 0;
